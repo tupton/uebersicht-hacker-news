@@ -10,15 +10,19 @@ export const className = `
 
 const PROXY = 'http://127.0.0.1:41417/';
 
+async function api(query) {
+    return await fetch (new URL(`${PROXY}https://hacker-news.firebaseio.com/v0/${query}`));
+}
+
 export const command = async dispatch => {
-    const response = await fetch(new URL(`${PROXY}https://hacker-news.firebaseio.com/v0/topstories.json`));
+    const response = await api('topstories.json');
     if (!response.ok) {
       throw Error(`${response.status} ${response.statusText}`);
     }
     const storyIds = await response.json();
     const data = await Promise.all(
         storyIds.map(async id => {
-            const itemResponse = await fetch(new URL(`${PROXY}https://hacker-news.firebaseio.com/v0/item/${id}.json`));
+            const itemResponse = await api(`item/${id}.json`);
             return await itemResponse.json();
         })
     );
