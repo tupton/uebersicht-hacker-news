@@ -1,3 +1,5 @@
+import { styled, css } from 'uebersicht';
+
 export const refreshFrequency = 1.8e6; // 30m
 
 export const className = `
@@ -37,14 +39,40 @@ export const updateState = (event, previousState) => {
     }
 };
 
+const TopStoriesList = styled.ul`
+    list-style-type: none;
+    line-height: 1.5rem;
+`;
+
+const a = css`
+    color: #333;
+    padding: 0 0.5rem;
+    text-decoration: none;
+`;
+
+const StoryLink = ({ title, url}) => (
+    <a className={a} href={url}>{`${title} (${new URL(url).hostname})`}</a>
+);
+
+const DiscussionLink = ({ id }) => (
+    <a className={a} href={`https://news.ycombinator.com/item?id=${id}`}>&#128172;</a>
+);
+
+const TopStory = ({id, title, url}) => (
+    <li>
+        <StoryLink title={title} url={url} />
+        <DiscussionLink id={id} />
+    </li>
+);
+
 export const render = ({ data = [], error = '' }) => (
   error ? (
     <div>
       {`Error retrieving: ${error}`}
     </div>
   ) : (
-    <ul>
-      {data.map(({ id, title, url}) => <li key={id}>{`${title} - ${url}`}</li>)}
-    </ul>
+    <TopStoriesList>
+      {data.map((item) => <TopStory key={item.id} {...item} />)}
+    </TopStoriesList>
   )
 );
