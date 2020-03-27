@@ -12,9 +12,7 @@ export const className = `
 
 const PROXY = 'http://127.0.0.1:41417/';
 
-async function api(query) {
-    return await fetch (new URL(`${PROXY}https://hacker-news.firebaseio.com/v0/${query}`));
-}
+const api = async query => await fetch (new URL(`${PROXY}https://hacker-news.firebaseio.com/v0/${query}`));
 
 export const command = async dispatch => {
     const response = await api('topstories.json');
