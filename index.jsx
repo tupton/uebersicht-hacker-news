@@ -50,12 +50,18 @@ const a = css`
     text-decoration: none;
 `;
 
-const StoryLink = ({ title, url}) => (
-    <a className={a} href={url}>{`${title} (${new URL(url).hostname})`}</a>
-);
+const makeItemLink = id => `https://news.ycombinator.com/item?id=${id}`;
+
+const StoryLink = ({ id, title, url}) => {
+    const link = url ? url : makeItemLink(id);
+    const host = ` (${(new URL(link)).hostname})`;
+    return (
+        <a className={a} href={link}>{`${title}${host}`}</a>
+    );
+};
 
 const DiscussionLink = ({ id }) => (
-    <a className={a} href={`https://news.ycombinator.com/item?id=${id}`}>&#128172;</a>
+    <a className={a} href={makeItemLink(id)}>discuss</a>
 );
 
 const TopStory = ({id, title, url}) => (
