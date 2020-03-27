@@ -21,7 +21,7 @@ export const command = async dispatch => {
     }
     const storyIds = await response.json();
     const data = await Promise.all(
-        storyIds.map(async id => {
+        storyIds.slice(0, 10).map(async id => {
             const itemResponse = await api(`item/${id}.json`);
             return await itemResponse.json();
         })
@@ -31,7 +31,7 @@ export const command = async dispatch => {
 
 export const updateState = (event, previousState) => {
     switch (event.type) {
-        case 'FETCH_SUCCEEDED': return { data: event.data.slice(0, 10) };
+        case 'FETCH_SUCCEEDED': return { data: event.data };
         case 'FETCH_FAILED': return { error: event.error.message };
         default: return previousState;
     }
