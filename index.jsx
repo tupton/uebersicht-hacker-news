@@ -3,11 +3,15 @@ import { styled, css } from 'uebersicht';
 export const refreshFrequency = 1.8e6; // 30m
 
 export const className = `
-  left: 2rem;
-  top: 2rem;
-  color: white;
+  left: 2em;
+  top: 2em;
   font-family: -apple-system;
   z-index: 1;
+
+  border: 0.125em solid #eee;
+  border-radius: 0.25em;
+  background-color: rgba(51, 51, 51, 0.5);
+  padding: 1em;
 `;
 
 const PROXY = 'http://127.0.0.1:41417/';
@@ -40,12 +44,18 @@ export const updateState = (event, previousState) => {
 const TopStoriesList = styled.ul`
     list-style-type: none;
     line-height: 1.5rem;
+    margin: 0;
+    padding: 0;
 `;
 
 const a = css`
-    color: #333;
+    color: #eee;
     padding: 0 0.5rem;
     text-decoration: none;
+`;
+
+const small = css`
+    font-size: 0.8rem;
 `;
 
 const makeItemLink = id => `https://news.ycombinator.com/item?id=${id}`;
@@ -59,7 +69,9 @@ const StoryLink = ({ id, title, url}) => {
 };
 
 const DiscussionLink = ({ id }) => (
-    <a className={a} href={makeItemLink(id)}>discuss</a>
+    <span className={small}>
+        <a className={a} href={makeItemLink(id)}>discuss</a>
+    </span>
 );
 
 const TopStory = ({id, title, url}) => (
