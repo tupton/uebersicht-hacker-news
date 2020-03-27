@@ -27,6 +27,9 @@ export const command = async dispatch => {
     const data = await Promise.all(
         storyIds.slice(0, 10).map(async id => {
             const itemResponse = await api(`item/${id}.json`);
+            if (!itemResponse.ok) {
+              throw Error(`${itemResponse.status} ${itemResponse.statusText}`);
+            }
             return await itemResponse.json();
         })
     );
