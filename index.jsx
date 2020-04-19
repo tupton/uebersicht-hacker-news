@@ -79,7 +79,7 @@ const DiscussionLink = ({ id }) => (
 
 const TopStory = ({id, title, url}) => (
     <li>
-        <StoryLink title={title} url={url} />
+        <StoryLink id={id} title={title} url={url} />
         <DiscussionLink id={id} />
     </li>
 );
